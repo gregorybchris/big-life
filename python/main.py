@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # world.add_entity(Library.R_PENTOMINO)
     world.add_entity(Library.GLIDER_GUN)
 
-    n_ticks = 140
+    n_ticks = 80
     for i in range(n_ticks):
         world.print(bounds=bounds)
         print()
