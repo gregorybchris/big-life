@@ -6,3 +6,7 @@
 
 # Logs
 *.log
+
+# Web
+build
+node_modules
