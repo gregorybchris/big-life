@@ -9,7 +9,7 @@ class World:
     def __init__(self):
         self._cells = {}
 
-    def set(self, row: int, col: int, alive: bool = True):
+    def set(self, row: int, col: int, alive: bool = True) -> None:
         if alive:
             if row not in self._cells:
                 self._cells[row] = {}
@@ -21,7 +21,7 @@ class World:
                 if len(self._cells[row]) == 0:
                     del self._cells[row]
 
-    def get(self, row: int, col: int):
+    def get(self, row: int, col: int) -> bool:
         if row not in self._cells:
             return False
         if col not in self._cells[row]:
@@ -107,6 +107,6 @@ class World:
         elif n_neighbors > 3:
             pass
 
-    def add_entity(self, entity: Entity):
+    def add_entity(self, entity: Entity) -> None:
         for r, c in entity.iterator():
             self.set(r, c)
