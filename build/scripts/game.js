@@ -8,6 +8,8 @@ class Game {
         this.onKeyPress = (keyName) => {
             if (keyName == KeyNames.SPACE)
                 this.running = !this.running;
+            else if (keyName == KeyNames.LETTER_S)
+                this.step = true;
             else if (keyName == KeyNames.UP)
                 this.world.updateBounds(this.world.bounds.translate(-1, 0));
             else if (keyName == KeyNames.DOWN)
@@ -18,8 +20,9 @@ class Game {
                 this.world.updateBounds(this.world.bounds.translate(0, 1));
         };
         this.onUpdate = (currentTime, deltaTime) => {
-            if (this.running) {
+            if (this.running || this.step) {
                 this.ticks++;
+                this.step = false;
                 const visitMap = new Map();
                 const changeMap = new Map();
                 this.world.forEachLocation((location) => {
@@ -36,6 +39,7 @@ class Game {
         this.world = world;
         this.ticks = 0;
         this.running = true;
+        this.step = false;
     }
     getNumNeighbors(location) {
         let neighborCount = 0;

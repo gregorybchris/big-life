@@ -6,6 +6,7 @@ const KeyNames = Object.freeze({
     DOWN: "ArrowDown",
     HYPHEN: "-",
     EQUALS: "=",
+    LETTER_S: "s",
 });
 const initKeyboard = (onKeyPress) => {
     const keyMap = {};
