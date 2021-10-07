@@ -8,6 +8,8 @@ class Game {
         this.onKeyPress = (keyName) => {
             if (keyName == KeyNames.SPACE)
                 this.running = !this.running;
+            else if (keyName == KeyNames.LETTER_P)
+                this.running = !this.running;
             else if (keyName == KeyNames.LETTER_S)
                 this.step = true;
             else if (keyName == KeyNames.UP)

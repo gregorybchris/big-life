@@ -8,6 +8,7 @@ const KeyNames = Object.freeze({
   DOWN: "ArrowDown",
   HYPHEN: "-",
   EQUALS: "=",
+  LETTER_P: "p",
   LETTER_S: "s",
 });
 
