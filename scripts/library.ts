@@ -25,6 +25,20 @@ function LibraryFactory() {
     []
   );
 
+  this.EATER = new Entity(
+    "eater",
+    [
+      [2, -2],
+      [2, -1],
+      [1, -1],
+      [0, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+    ],
+    []
+  );
+
   this.R_PENTOMINO = new Entity(
     "r-pentomino",
     [

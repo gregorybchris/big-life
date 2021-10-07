@@ -19,11 +19,19 @@ class World {
 
     this.cells = new Array(this.rows).fill(0).map((_, r) => {
       return new Array(this.cols).fill(0).map((_, c) => {
-        return new Cell(bounds.rowMin + r, bounds.colMin + c);
+        return new Cell(r, c);
       });
     });
 
     this.map = new Map();
+  }
+
+  updateBounds(bounds: Bounds) {
+    this.bounds = bounds;
+    this.forEachCell((cell) => {
+      const location: Location = [bounds.rowMin + cell.row, bounds.colMin + cell.col];
+      cell.setAlive(this.get(location));
+    });
   }
 
   forEachCell(callback: (cell: Cell) => void) {
@@ -41,6 +49,13 @@ class World {
     if (col < this.bounds.colMin) return false;
     if (col > this.bounds.colMax) return false;
     return true;
+  }
+
+  toggleCell(cell: Cell) {
+    const location: Location = [this.bounds.rowMin + cell.row, this.bounds.colMin + cell.col];
+    const alive = this.map.get(location);
+    this.map.set(location, !alive);
+    cell.setAlive(!alive);
   }
 
   getCell(location: Location): Cell {

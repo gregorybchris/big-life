@@ -2,22 +2,30 @@ import Cell from "./cell.js";
 import Location from "./location.js";
 import Map from "./map.js";
 import World from "./world.js";
+import { KeyName, KeyNames } from "./io.js";
 
 class Game {
   world: World;
   ticks: number;
-  time: number;
+  running: boolean;
 
   constructor(world: World) {
     this.world = world;
     this.ticks = 0;
-    this.time = 0;
+    this.running = true;
   }
 
-  onInteract(cell: Cell) {
-    console.log("Cell clicked", cell.id);
-    cell.setAlive(!cell.alive);
-  }
+  onCellClick = (cell: Cell) => {
+    this.world.toggleCell(cell);
+  };
+
+  onKeyPress = (keyName: KeyName) => {
+    if (keyName == KeyNames.SPACE) this.running = !this.running;
+    else if (keyName == KeyNames.UP) this.world.updateBounds(this.world.bounds.translate(-1, 0));
+    else if (keyName == KeyNames.DOWN) this.world.updateBounds(this.world.bounds.translate(1, 0));
+    else if (keyName == KeyNames.LEFT) this.world.updateBounds(this.world.bounds.translate(0, -1));
+    else if (keyName == KeyNames.RIGHT) this.world.updateBounds(this.world.bounds.translate(0, 1));
+  };
 
   getNumNeighbors(location: Location): number {
     let neighborCount = 0;
@@ -47,7 +55,6 @@ class Game {
     }
     visitMap.set(location, true);
     const numNeighbors = this.getNumNeighbors(location);
-    console.log("Location: ", location, "has ", numNeighbors, "neighbors");
     const alive = this.world.get(location);
     if (numNeighbors < 2 && alive) {
       changeMap.set(location, true);
@@ -61,27 +68,22 @@ class Game {
   }
 
   onUpdate = (currentTime: number, deltaTime: number) => {
-    this.ticks++;
-    this.time += deltaTime;
+    if (this.running) {
+      this.ticks++;
 
-    if (this.time > 2) {
-      this.time = 0;
-    } else {
-      return;
-    }
-
-    const visitMap = new Map();
-    const changeMap = new Map();
-    this.world.forEachLocation((location) => {
-      this.updateCell(location, visitMap, changeMap);
-      this.getNeighbors(location).forEach((neighborLocation) => {
-        this.updateCell(neighborLocation, visitMap, changeMap);
+      const visitMap = new Map();
+      const changeMap = new Map();
+      this.world.forEachLocation((location) => {
+        this.updateCell(location, visitMap, changeMap);
+        this.getNeighbors(location).forEach((neighborLocation) => {
+          this.updateCell(neighborLocation, visitMap, changeMap);
+        });
       });
-    });
 
-    changeMap.forEach((location) => {
-      this.world.set(location, !this.world.get(location));
-    });
+      changeMap.forEach((location) => {
+        this.world.set(location, !this.world.get(location));
+      });
+    }
   };
 }
 
