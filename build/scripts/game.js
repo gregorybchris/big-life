@@ -6,12 +6,15 @@ class Game {
             this.world.toggleCell(cell);
         };
         this.onKeyPress = (keyName) => {
+            console.log(keyName);
             if (keyName == KeyNames.SPACE)
                 this.running = !this.running;
             else if (keyName == KeyNames.LETTER_P)
                 this.running = !this.running;
             else if (keyName == KeyNames.LETTER_S)
                 this.step = true;
+            else if (keyName == KeyNames.BACKSPACE)
+                this.world.clear();
             else if (keyName == KeyNames.UP)
                 this.world.updateBounds(this.world.bounds.translate(-1, 0));
             else if (keyName == KeyNames.DOWN)

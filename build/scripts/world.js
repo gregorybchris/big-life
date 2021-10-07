@@ -12,6 +12,12 @@ class World {
         });
         this.map = new Map();
     }
+    clear() {
+        this.map = new Map();
+        this.forEachCell((cell) => {
+            cell.setAlive(false);
+        });
+    }
     updateBounds(bounds) {
         this.bounds = bounds;
         this.forEachCell((cell) => {
